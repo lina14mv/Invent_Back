@@ -12,11 +12,14 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("API funcionando");
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // Usar el endpoint de prueba de la base de datos
 testDbConnection(app);
+
+// Usar las rutas de la API
+app.use('/api', rutas);
 
 app.listen(process.env.PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`);
