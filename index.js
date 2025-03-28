@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 testDbConnection(app);
 
 // Usar las rutas de la API
-app.use('/api', rutas);
+app.use(rutas);
 
 app.listen(process.env.PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`);

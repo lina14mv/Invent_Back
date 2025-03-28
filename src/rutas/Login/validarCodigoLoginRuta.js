@@ -1,5 +1,5 @@
 const express = require('express');
-const { validarCodigoSesion } = require('../../src/middlewares/validacionLogin');
+const { validarCodigoSesion } = require('../../middlewares/validacionLogin');
 
 const router = express.Router();
 
