@@ -7,40 +7,55 @@ const pool = new Pool({
 // Controlador para realizar todas las consultas y retornar una única respuesta
 const consultaInicial = async (req, res) => {
     try {
-        // Contar negocios (empresas y fincas)
-        const resultNegocios = await pool.query("SELECT tipo_negocio, COUNT(*) AS cantidad FROM Negocios GROUP BY tipo_negocio");
-        const negocios = resultNegocios.rows.reduce((acc, row) => {
-            acc[row.tipo_negocio] = parseInt(row.cantidad, 10);
-            return acc;
-        }, {});
-        // Contar usuarios
-        const resultUsuarios = await pool.query('SELECT COUNT(*) AS cantidad FROM Usuarios');
-        const cantidadUsuarios = parseInt(resultUsuarios.rows[0].cantidad, 10);
-
-        // Contar clientes
-        const resultClientes = await pool.query('SELECT COUNT(*) AS cantidad FROM Clientes');
-        const cantidadClientes = parseInt(resultClientes.rows[0].cantidad, 10);
-
-        // Contar productos
-        const resultProductos = await pool.query('SELECT COUNT(*) AS cantidad FROM Productos');
-        const cantidadProductos = parseInt(resultProductos.rows[0].cantidad, 10);
-
-        // Contar ventas
-        const resultVentas = await pool.query('SELECT COUNT(*) AS cantidad FROM Ventas');
-        const cantidadVentas = parseInt(resultVentas.rows[0].cantidad, 10);
-         // Retornar datos de las empresas y fincas con la suma de ventas del último mes
-         const resultDatosNegocios = await pool.query(`
+        // Consulta consolidada
+        const result = await pool.query(`
             SELECT 
-                n.nombre AS nombre_negocio, 
-                n.direccion, 
-                n.telefono, 
-                n.activo,
-                COALESCE(SUM(v.total_venta), 0) AS total_ventas_ultimo_mes
-            FROM Negocios n
-            LEFT JOIN Ventas v ON n.id_negocio = v.id_negocio AND v.fecha_venta >= NOW() - INTERVAL '1 month'
-            GROUP BY n.id_negocio, n.nombre, n.direccion, n.telefono
+                -- Contar negocios por tipo
+                (SELECT json_object_agg(tipo_negocio, cantidad) 
+                 FROM (
+                    SELECT tipo_negocio, COUNT(*) AS cantidad 
+                    FROM Negocios 
+                    GROUP BY tipo_negocio
+                 ) AS negocios_por_tipo) AS negocios,
+                
+                -- Contar usuarios
+                (SELECT COUNT(*) FROM Usuarios) AS cantidad_usuarios,
+                
+                -- Contar clientes
+                (SELECT COUNT(*) FROM Clientes) AS cantidad_clientes,
+                
+                -- Contar productos
+                (SELECT COUNT(*) FROM Productos) AS cantidad_productos,
+                
+                -- Contar ventas
+                (SELECT COUNT(*) FROM Ventas) AS cantidad_ventas,
+                
+                -- Datos de negocios con suma de ventas del último mes
+                (SELECT json_agg(row_to_json(datos_negocios)) 
+                 FROM (
+                    SELECT 
+                        n.nombre AS nombre_negocio, 
+                        n.direccion, 
+                        n.telefono, 
+                        n.activo,
+                        COALESCE(SUM(v.total_venta), 0) AS total_ventas_ultimo_mes
+                    FROM Negocios n
+                    LEFT JOIN Ventas v 
+                        ON n.id_negocio = v.id_negocio 
+                        AND v.fecha_venta >= NOW() - INTERVAL '1 month'
+                    GROUP BY n.id_negocio, n.nombre, n.direccion, n.telefono, n.activo
+                 ) AS datos_negocios) AS datos_negocios
         `);
-        const datosNegocios = resultDatosNegocios.rows;
+
+        // Extraer los resultados
+        const {
+            negocios,
+            cantidad_usuarios: cantidadUsuarios,
+            cantidad_clientes: cantidadClientes,
+            cantidad_productos: cantidadProductos,
+            cantidad_ventas: cantidadVentas,
+            datos_negocios: datosNegocios
+        } = result.rows[0];
 
         // Retornar todas las consultas en una única respuesta
         res.status(200).json({

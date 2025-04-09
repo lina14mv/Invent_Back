@@ -41,6 +41,7 @@ const enviarCodigoRecuperacion = async (req, res) => {
       subject: 'Código para cambio de contraseña',
       html: `
         <div style="text-align: center;">
+        <img src="https://res.cloudinary.com/deucbjygt/image/upload/v1742666709/Invent_vgeqm2.gif" alt="Logo" style="width: 200px; height: auto;">
           <h1>Código para cambio de contraseña</h1>
           <p>Su código de recuperación es: <strong>${codigoRecuperacion}</strong></p>
           <p>Utilice este código para cambiar su contraseña.</p>

@@ -43,6 +43,11 @@ const validarCodigoSesion = async (req, res) => {
 
     const usuario = userResult.rows[0];
 
+   // Validar si el estado activo es false
+   if (usuario.activo === false) {
+    return res.status(403).json({ error: `El ${tipo} está inactivo. Por favor, contacte al administrador.` });
+  }
+
     // Generar token JWT
     const token = generarToken(usuario, tipo);
 

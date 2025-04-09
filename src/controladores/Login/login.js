@@ -65,6 +65,7 @@ const login = async (req, res) => {
       subject: 'Código de inicio de sesión',
       html: `
         <div style="text-align: center;">
+        <img src="https://res.cloudinary.com/deucbjygt/image/upload/v1742666709/Invent_vgeqm2.gif" alt="Logo" style="width: 200px; height: auto;">
           <h1>Código de inicio de sesión</h1>
           <p>Su código de inicio de sesión es <strong>${codigoSesion}</strong>.</p>
         </div>

@@ -12,7 +12,7 @@ CREATE TABLE Usuarios (
     debe_cambiar_contrasena BOOLEAN DEFAULT TRUE, 
     codigo_recuperacion VARCHAR(255),
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    activo BOOLEAN DEFAULT TRUE  -- Nuevo campo para estado del usuario
+    activo BOOLEAN DEFAULT TRUE  -- Nuevo campo para estado del usuario 
 );
 
 -- 2️⃣ TABLA DE NEGOCIOS (antes Empresas, renombrada para incluir fincas)
@@ -161,6 +161,11 @@ CREATE TABLE Tickets (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE SET NULL
 );
 
+
+-- Alterar la tabla Usuarios para agregar la columna pertenece_negocio
+ALTER TABLE Usuarios
+ADD pertenece_negocio INT,
+ADD CONSTRAINT fk_pertenece_negocio FOREIGN KEY (pertenece_negocio) REFERENCES Negocios(id_negocio) ON DELETE SET NULL;
 -- 📌 ÍNDICES PARA MEJOR RENDIMIENTO
 
 

@@ -10,6 +10,8 @@ const registroAdministradores = require('./Administradores/registroAdministrador
 const validacionCambioContrasena = require('./Login/validacionCambioContrasenaRuta');
 const paraContactar = require('./Administradores/paraContactarRuta');
 const inicioAdmin = require('./Administradores/inicioAdminRuja');
+const crearEmpleado = require('./Negocios/crearEmpleadoRuta');
+const crearTickets = require('./Negocios/crearTicketsRuta');
 
 router.use("/negocios", registroNegocios);
 router.use("/api", login);
@@ -19,5 +21,7 @@ router.use("/administradores", registroAdministradores);
 router.use("/api", validacionCambioContrasena);
 router.use("/api", paraContactar);
 router.use("/api", inicioAdmin);
+router.use("/api", crearEmpleado);
+router.use("/api", crearTickets);
 
 module.exports = router;
