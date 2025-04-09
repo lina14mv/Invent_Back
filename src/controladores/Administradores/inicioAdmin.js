@@ -34,6 +34,7 @@ const consultaInicial = async (req, res) => {
                 n.nombre AS nombre_negocio, 
                 n.direccion, 
                 n.telefono, 
+                n.activo,
                 COALESCE(SUM(v.total_venta), 0) AS total_ventas_ultimo_mes
             FROM Negocios n
             LEFT JOIN Ventas v ON n.id_negocio = v.id_negocio AND v.fecha_venta >= NOW() - INTERVAL '1 month'
