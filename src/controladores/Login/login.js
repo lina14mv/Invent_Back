@@ -41,6 +41,10 @@ const login = async (req, res) => {
 
     const usuario = userResult.rows[0];
 
+    // Verificar si la contraseña almacenada es válida
+    if (!usuario.contrasena) {
+      return res.status(500).json({ error: 'El usuario no tiene una contraseña válida en el sistema' });
+    }
     // Verificar la contraseña
     const validPassword = await bcrypt.compare(contraseña, usuario.contrasena);
     if (!validPassword) {

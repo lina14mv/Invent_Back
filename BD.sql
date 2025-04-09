@@ -9,7 +9,7 @@ CREATE TABLE Usuarios (
     rol TEXT CHECK (rol IN ('administrador', 'empleado')) NOT NULL,  -- Solo administrador y empleado
     codigo_sesion VARCHAR(255),
     contrasena VARCHAR(255) NOT NULL,
-    debe_cambiar_contrasena BOOLEAN DEFAULT TRUE,
+    debe_cambiar_contrasena BOOLEAN DEFAULT TRUE, 
     codigo_recuperacion VARCHAR(255),
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     activo BOOLEAN DEFAULT TRUE  -- Nuevo campo para estado del usuario
@@ -33,6 +33,11 @@ CREATE TABLE Negocios (
     codigo_recuperacion VARCHAR(255), -- Nuevo campo
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Nuevo campo
     activo BOOLEAN DEFAULT TRUE  -- Nuevo campo para estado del negocio
+    fondo VARCHAR(255) DEFAULT 'FFFFFF', -- Nuevo campo para fondo de pantalla --Falta agregarlo
+    color_primario VARCHAR(200) DEFAULT '#000000', -- Nuevo campo para color primario --Falta agregarlo
+    color_secundario VARCHAR(200) DEFAULT '#FFFFFF', -- Nuevo campo para color secundario --Falta agregarlo
+    creado_por INT, -- ID del administrador que creó el negocio
+    FOREIGN KEY (creado_por) REFERENCES Administradores(id_admin) ON DELETE SET NULL  
 );
 
 -- 3️⃣ TABLA PARA CONTACTO
@@ -131,9 +136,30 @@ CREATE TABLE Reportes (
     FOREIGN KEY (id_negocio) REFERENCES Negocios(id_negocio) ON DELETE CASCADE
 );
 
-ALTER TABLE Negocios
-ADD COLUMN creado_por INT, -- ID del administrador que creó el negocio
-ADD FOREIGN KEY (creado_por) REFERENCES Administradores(id_admin) ON DELETE SET NULL;
+-- 9️⃣ TABLA DE PROVEEDORES
+CREATE TABLE Proveedores (
+    id_proveedor SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100),
+    telefono VARCHAR(15),
+    direccion VARCHAR(255),
+    id_negocio INT, -- Relación con el negocio que creó el proveedor
+    FOREIGN KEY (id_negocio) REFERENCES Negocios(id_negocio) ON DELETE CASCADE
+);
+
+-- 🔟 TABLA DE TICKETS
+CREATE TABLE Tickets (
+    id_ticket SERIAL PRIMARY KEY,
+    id_negocio INT, -- Relación con el negocio que generó el ticket
+    id_usuario INT, -- Usuario que generó el ticket
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    asunto VARCHAR(255) NOT NULL,
+    descripcion TEXT NOT NULL,
+    estado TEXT CHECK (estado IN ('abierto', 'en progreso', 'cerrado')) DEFAULT 'abierto',
+    prioridad TEXT CHECK (prioridad IN ('baja', 'media', 'alta')) DEFAULT 'media',
+    FOREIGN KEY (id_negocio) REFERENCES Negocios(id_negocio) ON DELETE CASCADE,
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE SET NULL
+);
 
 -- 📌 ÍNDICES PARA MEJOR RENDIMIENTO
 
