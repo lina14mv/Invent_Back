@@ -1,3 +1,17 @@
+ 🔧 TABLA DE ADMINISTRADORES (Para desarrolladores o dueños del software)
+CREATE TABLE Administradores (
+    id_admin SERIAL PRIMARY KEY, -- Identificador único del administrador
+    nombre VARCHAR(100) NOT NULL, -- Nombre completo del administrador
+    nombre_usuario VARCHAR(50) UNIQUE NOT NULL, -- Nombre de usuario único para iniciar sesión
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    contrasena VARCHAR(255) NOT NULL, -- Contraseña cifrada
+    debe_cambiar_contrasena BOOLEAN DEFAULT TRUE, 
+    codigo_sesion VARCHAR(255), -- Nuevo campo
+    codigo_recuperacion VARCHAR(255),
+    rol TEXT CHECK (rol IN ('superadmin', 'soporte', 'analista')) DEFAULT 'soporte', -- Roles de acceso
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de registro
+    activo BOOLEAN DEFAULT TRUE -- Estado del administrador
+);
 -- 1️⃣ TABLA DE USUARIOS (Modificada)
 CREATE TABLE Usuarios (
     id_usuario SERIAL PRIMARY KEY,
@@ -33,9 +47,9 @@ CREATE TABLE Negocios (
     codigo_recuperacion VARCHAR(255), -- Nuevo campo
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Nuevo campo
     activo BOOLEAN DEFAULT TRUE  -- Nuevo campo para estado del negocio
-    fondo VARCHAR(255) DEFAULT 'FFFFFF', -- Nuevo campo para fondo de pantalla --Falta agregarlo
-    color_primario VARCHAR(200) DEFAULT '#000000', -- Nuevo campo para color primario --Falta agregarlo
-    color_secundario VARCHAR(200) DEFAULT '#FFFFFF', -- Nuevo campo para color secundario --Falta agregarlo
+    --fondo VARCHAR(255) DEFAULT 'FFFFFF', -- Nuevo campo para fondo de pantalla --Falta agregarlo
+    --color_primario VARCHAR(200) DEFAULT '#000000', -- Nuevo campo para color primario --Falta agregarlo
+    --color_secundario VARCHAR(200) DEFAULT '#FFFFFF', -- Nuevo campo para color secundario --Falta agregarlo
     creado_por INT, -- ID del administrador que creó el negocio
     FOREIGN KEY (creado_por) REFERENCES Administradores(id_admin) ON DELETE SET NULL  
 );
@@ -47,23 +61,11 @@ CREATE TABLE ParaContactar (
     correo VARCHAR(100) NOT NULL,
     telefono VARCHAR(15),
     mensaje TEXT NOT NULL,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     contactado BOOLEAN DEFAULT FALSE
 );
 
--- 🔧 TABLA DE ADMINISTRADORES (Para desarrolladores o dueños del software)
-CREATE TABLE Administradores (
-    id_admin SERIAL PRIMARY KEY, -- Identificador único del administrador
-    nombre VARCHAR(100) NOT NULL, -- Nombre completo del administrador
-    nombre_usuario VARCHAR(50) UNIQUE NOT NULL, -- Nombre de usuario único para iniciar sesión
-    correo VARCHAR(100) UNIQUE NOT NULL,
-    contrasena VARCHAR(255) NOT NULL, -- Contraseña cifrada
-    codigo_sesion VARCHAR(255), -- Nuevo campo
-    codigo_recuperacion VARCHAR(255),
-    rol TEXT CHECK (rol IN ('superadmin', 'soporte', 'analista')) DEFAULT 'soporte', -- Roles de acceso
-    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de registro
-    activo BOOLEAN DEFAULT TRUE -- Estado del administrador
-);
+--
 
 -- 4️⃣ TABLA DE CLIENTES
 CREATE TABLE Clientes (

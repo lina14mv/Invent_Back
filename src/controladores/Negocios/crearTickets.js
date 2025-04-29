@@ -1,4 +1,4 @@
-const { Pool } = require("pg");
+const { pool } = require("../../../configuracion/bd");
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
@@ -7,10 +7,6 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-});
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
 });
 
 const registrarTicket = async (req, res) => {

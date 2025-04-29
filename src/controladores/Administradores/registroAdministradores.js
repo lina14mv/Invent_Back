@@ -1,9 +1,5 @@
-const { Pool } = require('pg');
+const { pool } = require('../../../configuracion/bd');
 const bcrypt = require('bcrypt');
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-});
 
 const registrarAdministrador = async (req, res) => {
   const { nombre, nombre_usuario, contrasena, rol, correo } = req.body;
@@ -30,7 +26,7 @@ const registrarAdministrador = async (req, res) => {
     res.status(201).json({ message: 'Administrador registrado exitosamente', id_admin });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al registrar el administrador' });
+    res.status(500).json({ error: 'Error al registrar el administrador', details: error.message });
   }
 };
 

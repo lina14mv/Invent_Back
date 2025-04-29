@@ -1,8 +1,4 @@
-const { Pool } = require('pg');
-
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL
-});
+const { pool } = require('../../../configuracion/bd'); // Importar la configuración de la base de datos
 
 // Controlador para realizar todas las consultas y retornar una única respuesta
 const consultaInicial = async (req, res) => {

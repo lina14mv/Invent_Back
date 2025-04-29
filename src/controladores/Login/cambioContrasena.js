@@ -1,9 +1,5 @@
-const { Pool } = require('pg');
 const bcrypt = require('bcrypt');
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-});
+const { pool } = require('../../../configuracion/bd');
 
 const cambiarContrasena = async (req, res) => {
   const { correo, nuevaContrasena } = req.body;

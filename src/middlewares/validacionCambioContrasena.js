@@ -1,9 +1,6 @@
-const { Pool } = require('pg');
+const { pool } = require('../../configuracion/bd');
 const nodemailer = require('nodemailer');
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-});
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',

@@ -1,9 +1,6 @@
-const { Pool } = require('pg');
+const { pool } = require('../../configuracion/bd');
 const jwt = require('jsonwebtoken');
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-});
 
 const generarToken = (usuario, tipo) => {
   const payload = {
