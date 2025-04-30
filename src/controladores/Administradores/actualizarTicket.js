@@ -10,14 +10,33 @@ const transporter = nodemailer.createTransport({
 });
 
 const actualizarTicket = async (req, res) => {
-    const { id_ticket, nuevo_estado } = req.body;
+    const { id_ticket, nuevo_estado, nueva_prioridad } = req.body;
 
     try {
-        // Actualizar el estado del ticket
-        const ticketResult = await pool.query(
-            `UPDATE Tickets SET estado = $1 WHERE id_ticket = $2 RETURNING id_usuario, asunto, descripcion`,
-            [nuevo_estado, id_ticket]
-        );
+        // Construir la consulta SQL dinámicamente
+        const fieldsToUpdate = [];
+        const values = [];
+        let query = 'UPDATE Tickets SET ';
+
+        if (nuevo_estado) {
+            fieldsToUpdate.push('estado = $' + (fieldsToUpdate.length + 1));
+            values.push(nuevo_estado);
+        }
+
+        if (nueva_prioridad) {
+            fieldsToUpdate.push('prioridad = $' + (fieldsToUpdate.length + 1));
+            values.push(nueva_prioridad);
+        }
+
+        if (fieldsToUpdate.length === 0) {
+            return res.status(400).json({ error: 'No se proporcionaron campos para actualizar' });
+        }
+
+        query += fieldsToUpdate.join(', ') + ' WHERE id_ticket = $' + (fieldsToUpdate.length + 1) + ' RETURNING id_usuario, asunto, descripcion';
+        values.push(id_ticket);
+
+        // Ejecutar la consulta
+        const ticketResult = await pool.query(query, values);
 
         if (ticketResult.rows.length === 0) {
             return res.status(404).json({ error: 'Ticket no encontrado' });
@@ -51,7 +70,8 @@ const actualizarTicket = async (req, res) => {
                     <p><strong>ID del ticket:</strong> ${id_ticket}</p>
                     <p><strong>Asunto:</strong> ${asunto}</p>
                     <p><strong>Descripción:</strong> ${descripcion}</p>
-                    <p><strong>Nuevo estado:</strong> ${nuevo_estado}</p>
+                    ${nuevo_estado ? `<p><strong>Nuevo estado:</strong> ${nuevo_estado}</p>` : ''}
+                    ${nueva_prioridad ? `<p><strong>Prioridad:</strong> ${nueva_prioridad}</p>` : ''}
                     <p>Gracias por tu paciencia.</p>
                     <p>Atentamente,</p>
                     <p>Soporte Técnico</p>
