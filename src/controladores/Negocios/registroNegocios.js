@@ -19,6 +19,7 @@ const registrarNegocio = async (req, res) => {
     correo,
     tipo_negocio,
     nombre_dueno,
+    ubicacion_ciudad,
     cedula_dueno,
     id_admin
   } = req.body; // Asegúrate de recibir todos los campos necesarios
@@ -32,9 +33,9 @@ const registrarNegocio = async (req, res) => {
     const negocioResult = await pool.query(
       `INSERT INTO Negocios (
         nombre, nit, direccion, telefono, correo, tipo_negocio, 
-        nombre_dueno, cedula_dueno, contrasena, debe_cambiar_contrasena, 
+        nombre_dueno, ubicacion_ciudad, cedula_dueno, contrasena, debe_cambiar_contrasena, 
         creado_por
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id_negocio`,
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id_negocio`,
       [
         nombre,
         nit,
@@ -43,6 +44,7 @@ const registrarNegocio = async (req, res) => {
         correo,
         tipo_negocio,
         nombre_dueno,
+        ubicacion_ciudad,
         cedula_dueno,
         hashedPassword,
         true, // debe_cambiar_contrasena

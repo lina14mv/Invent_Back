@@ -14,6 +14,7 @@ const crearEmpleado = require('./Negocios/crearEmpleadoRuta');
 const crearTickets = require('./Negocios/crearTicketsRuta');
 const verTickets = require('./Administradores/verTicketsRuta');
 const actualizarTicket = require('./Administradores/actualizarTicketRuta');
+const listarNegocios = require('./Administradores/negociosRuta');
 
 router.use("/negocios", registroNegocios);
 router.use("/api", login);
@@ -27,5 +28,6 @@ router.use("/api", crearEmpleado);
 router.use("/api", crearTickets);
 router.use("/api", verTickets);
 router.use("/api", actualizarTicket);
+router.use("/api", listarNegocios);
 
 module.exports = router;
