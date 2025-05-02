@@ -15,6 +15,7 @@ const crearTickets = require('./Negocios/crearTicketsRuta');
 const verTickets = require('./Administradores/verTicketsRuta');
 const actualizarTicket = require('./Administradores/actualizarTicketRuta');
 const listarNegocios = require('./Administradores/negociosRuta');
+const listarUsuariosPorNegocio = require('./Administradores/usuariosRuta');
 
 router.use("/negocios", registroNegocios);
 router.use("/api", login);
@@ -29,5 +30,6 @@ router.use("/api", crearTickets);
 router.use("/api", verTickets);
 router.use("/api", actualizarTicket);
 router.use("/api", listarNegocios);
+router.use("/api", listarUsuariosPorNegocio);
 
 module.exports = router;
