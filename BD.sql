@@ -87,6 +87,7 @@ CREATE TABLE Productos (
     precio_compra NUMERIC(10,2) NOT NULL,
     precio_venta NUMERIC(10,2) NOT NULL,
     stock INT DEFAULT 0,
+    imagen_url VARCHAR(255),
     id_negocio INT,
     FOREIGN KEY (id_negocio) REFERENCES Negocios(id_negocio) ON DELETE CASCADE
 );
