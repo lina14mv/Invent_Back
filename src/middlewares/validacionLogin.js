@@ -44,15 +44,19 @@ const validarCodigoSesion = async (req, res) => {
    if (usuario.activo === false) {
     return res.status(403).json({ error: `El ${tipo} está inactivo. Por favor, contacte al administrador.` });
   }
+  // Obtener el ID según el tipo
+  const id = tipo === 'usuario' ? usuario.id_usuario : tipo === 'negocio' ? usuario.id_negocio : usuario.id_admin;
 
     // Generar token JWT
     const token = generarToken(usuario, tipo);
+    console.log(`ID obtenido (${tipo}):`, id);
 
     // Responder con el token, tipo de usuario y si necesita cambiar la contraseña
     res.status(200).json({
       message: 'Código de sesión válido',
       token,
       tipo,
+      id,
       debe_cambiar_contrasena: usuario.debe_cambiar_contrasena || false // Por defecto, false si no existe el campo
     });
   } catch (error) {
