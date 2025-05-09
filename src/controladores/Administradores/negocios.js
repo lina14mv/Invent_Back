@@ -11,6 +11,8 @@ const listarNegocios = async (req, res) => {
                 n.correo,
                 n.telefono,
                 n.direccion,
+                n.nombre_dueno,
+                n.cedula_dueno,
                 n.activo,
                 n.ubicacion_ciudad,
                 COUNT(DISTINCT p.id_producto) AS cantidad_productos,
