@@ -20,6 +20,7 @@ const registrarProducto = require('./Negocios/registrarProductoRuta');
 const mostrarProductos = require('./Negocios/mostrarProductosRuta');
 const editarEmpresa = require('./Administradores/editarNegocioRuta');
 const desactivarNegocio = require('./Administradores/desactivarNegocioRuta');
+const activarNegocio = require('./Administradores/activarnegocioRuta');
 
 router.use("/negocios", registroNegocios);
 router.use("/api", login);
@@ -39,5 +40,6 @@ router.use("/api", registrarProducto);
 router.use("/api/productos", mostrarProductos);
 router.use("/api", editarEmpresa);
 router.use("/api", desactivarNegocio);
+router.use("/api", activarNegocio);
 
 module.exports = router;
