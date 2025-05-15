@@ -8,7 +8,30 @@ const { testDbConnection } = require("./configuracion/bd");
 
 const app = express();
 
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5002", // Origen local para desarrollo
+  "http://localhost:5173",
+  // "http://localhost:3004",
+  // "https://movetogether.netlify.app", 
+  // "https://move-together-back.vercel.app",
+];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    }    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = "El CORS policy no permite el acceso desde este origen.";
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 200, // Para navegadores antiguos que requieren un status 200 en lugar de 204
+};
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
