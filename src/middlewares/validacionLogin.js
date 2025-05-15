@@ -6,7 +6,7 @@ const generarToken = (usuario, tipo) => {
   const payload = {
     id: tipo === 'usuario' ? usuario.id_usuario : tipo === 'negocio' ? usuario.id_negocio : usuario.id_admin,
     correo: usuario.correo || usuario.nombre_usuario,
-    rol: usuario.rol || tipo,
+    rol: usuario.rol,
     tipo
   };
 
