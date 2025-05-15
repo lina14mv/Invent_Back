@@ -21,6 +21,7 @@ const mostrarProductos = require('./Negocios/mostrarProductosRuta');
 const editarEmpresa = require('./Administradores/editarNegocioRuta');
 const desactivarNegocio = require('./Administradores/desactivarNegocioRuta');
 const activarNegocio = require('./Administradores/activarnegocioRuta');
+const inventario = require('./Negocios/inventarioRuta');
 
 router.use("/negocios", registroNegocios);
 router.use("/api", login);
@@ -41,5 +42,5 @@ router.use("/api/productos", mostrarProductos);
 router.use("/api", editarEmpresa);
 router.use("/api", desactivarNegocio);
 router.use("/api", activarNegocio);
-
+router.use("/api", inventario);
 module.exports = router;
