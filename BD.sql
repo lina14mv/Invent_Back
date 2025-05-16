@@ -169,8 +169,21 @@ CREATE TABLE Tickets (
 ALTER TABLE Usuarios
 ADD pertenece_negocio INT,
 ADD CONSTRAINT fk_pertenece_negocio FOREIGN KEY (pertenece_negocio) REFERENCES Negocios(id_negocio) ON DELETE SET NULL;
+
+
+
+ALTER TABLE Negocios
+ADD fondo VARCHAR(255) DEFAULT '#ee7433', 
+ADD color_primario VARCHAR(200) DEFAULT '#000000', 
+ADD color_secundario VARCHAR(200) DEFAULT '#f8f8f8'
 -- 📌 ÍNDICES PARA MEJOR RENDIMIENTO
 
+
+UPDATE Negocios
+SET fondo = '#ee7433',
+    color_primario = '#ffffff',
+    color_secundario = '#000000'
+WHERE id_negocio = 1;
 
 
 --Para eliminar la bd

@@ -11,7 +11,10 @@ const editarEmpresa = async (req, res) => {
         tipo_negocio,
         nombre_dueno,
         ubicacion_ciudad,
-        cedula_dueno
+        cedula_dueno,
+        fondo,
+        color_primario,
+        color_secundario
     } = req.body;
 
     try {
@@ -60,6 +63,18 @@ const editarEmpresa = async (req, res) => {
         if (cedula_dueno) {
             fieldsToUpdate.push('cedula_dueno = $' + (fieldsToUpdate.length + 1));
             values.push(cedula_dueno);
+        }
+        if (fondo) {
+            fieldsToUpdate.push('fondo = $' + (fieldsToUpdate.length + 1));
+            values.push(fondo);
+        }
+        if (color_primario) {
+            fieldsToUpdate.push('color_primario = $' + (fieldsToUpdate.length + 1));
+            values.push(color_primario);
+        }
+        if (color_secundario) {
+            fieldsToUpdate.push('color_secundario = $' + (fieldsToUpdate.length + 1));
+            values.push(color_secundario);  
         }
 
         // Si no se envió ningún campo para actualizar
