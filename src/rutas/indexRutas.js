@@ -25,6 +25,7 @@ const inventario = require('./Negocios/inventarioRuta');
 const cerrarSesion = require('./Login/cerrarSesionRuta');
 const verEmpleados = require('./Negocios/verEmpleadosRuta');
 const obtenerColoresPorCorreo = require('./Negocios/coloresNegocioRuta');
+const editarEmpleado = require('./Negocios/editarEmpleadoRuta');
 
 router.use("/negocios", registroNegocios);
 router.use("/api", login);
@@ -49,5 +50,6 @@ router.use("/api", inventario);
 router.use("/api", cerrarSesion);
 router.use("/api", verEmpleados);
 router.use("/api", obtenerColoresPorCorreo);
+router.use("/api", editarEmpleado);
 
 module.exports = router;

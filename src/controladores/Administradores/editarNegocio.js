@@ -100,7 +100,7 @@ const editarEmpresa = async (req, res) => {
         });
     } catch (error) {
         console.error('Error al editar el negocio:', error);
-        res.status(500).json({ error: 'Error al editar el negocio' });
+        res.status(500).json({ error: 'Error al editar el negocio', error });
     }
 };
 
