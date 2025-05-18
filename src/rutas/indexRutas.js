@@ -26,6 +26,13 @@ const cerrarSesion = require('./Login/cerrarSesionRuta');
 const verEmpleados = require('./Negocios/verEmpleadosRuta');
 const obtenerColoresPorCorreo = require('./Negocios/coloresNegocioRuta');
 const editarEmpleado = require('./Negocios/editarEmpleadoRuta');
+const crearCliente = require('./Negocios/crearClienteRuta');
+const crearVenta = require('./Negocios/crearVentaRuta');
+const verClientes = require('./Negocios/verClientesRuta');
+const verVentas = require('./Negocios/verVentasRuta');
+const datosUsuario = require('./Negocios/usuarioRuta');
+const detalleVenta = require('./Negocios/detalleVentaRuta');
+const datosNegocio = require('./Negocios/datosNegocioRuta');
 
 router.use("/negocios", registroNegocios);
 router.use("/api", login);
@@ -51,5 +58,12 @@ router.use("/api", cerrarSesion);
 router.use("/api", verEmpleados);
 router.use("/api", obtenerColoresPorCorreo);
 router.use("/api", editarEmpleado);
+router.use("/api", crearCliente);
+router.use("/api", crearVenta);
+router.use("/api", verClientes);
+router.use("/api", verVentas);
+router.use("/api", datosUsuario);
+router.use("/api", detalleVenta);
+router.use("/api", datosNegocio);
 
 module.exports = router;
