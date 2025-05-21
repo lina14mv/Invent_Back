@@ -8,10 +8,10 @@ const crearMembresia = async (req, res) => {
     }
 
     try {
-        // Calcular fechas
+        // Calcular fechas correctamente usando make_interval
         const result = await pool.query(
-            `INSERT INTO Membresias (id_negocio, fecha_inicio, fecha_fin)
-             VALUES ($1, CURRENT_DATE, CURRENT_DATE + ($2 || ' month')::interval)
+            `INSERT INTO Membresias (id_negocio, fecha_inicio, fecha_fin, meses)
+             VALUES ($1, CURRENT_DATE, CURRENT_DATE + make_interval(months => $2::int), $2)
              RETURNING fecha_fin`,
             [id_negocio, meses]
         );

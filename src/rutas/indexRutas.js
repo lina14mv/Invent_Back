@@ -37,6 +37,8 @@ const finanzas = require('./Negocios/finanzasRuta');
 const crearMembresia = require('./Administradores/crearMembresiaRuta');
 const verMembresias = require('./Administradores/verMembresiasRuta');
 const renovarMembresia = require('./Administradores/renovarMembresiaRuta');
+const actualizarEstado = require('./Administradores/activoMembresiaRuta');
+const grafica = require('./Administradores/graficaRuta');
 
 router.use("/negocios", registroNegocios);
 router.use("/api", login);
@@ -73,5 +75,7 @@ router.use("/api", finanzas);
 router.use("/api", crearMembresia);
 router.use("/api", verMembresias);
 router.use("/api", renovarMembresia);
+router.use("/api", actualizarEstado);
+router.use("/api", grafica);
 
 module.exports = router;
