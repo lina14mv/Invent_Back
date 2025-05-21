@@ -15,6 +15,7 @@ const verTickets = async (req, res) => {
                 u.id_usuario AS id_usuario,
                 u.correo AS correo_usuario,
                 n.nombre AS nombre_negocio,
+                n.correo AS correo_negocio,
                 n.id_negocio AS id_negocio
             FROM Tickets t
             LEFT JOIN Usuarios u ON t.id_usuario = u.id_usuario

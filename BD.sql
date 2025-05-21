@@ -65,6 +65,21 @@ CREATE TABLE ParaContactar (
     contactado BOOLEAN DEFAULT FALSE
 );
 
+CREATE TABLE Menbresias (
+    id_menbresia SERIAL PRIMARY KEY,
+    id_negocio INT,
+    fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_fin TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_negocio) REFERENCES Negocios(id_negocio) ON DELETE CASCADE
+);
+
+CREATE TABLE Pagos (
+    id_pago SERIAL PRIMARY KEY,
+    id_negocio INT,
+    fecha_pago TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    meses INT NOT NULL,
+    FOREIGN KEY (id_negocio) REFERENCES Negocios(id_negocio) ON DELETE CASCADE
+);
 --
 
 -- 4️⃣ TABLA DE CLIENTES

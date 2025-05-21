@@ -33,6 +33,10 @@ const verVentas = require('./Negocios/verVentasRuta');
 const datosUsuario = require('./Negocios/usuarioRuta');
 const detalleVenta = require('./Negocios/detalleVentaRuta');
 const datosNegocio = require('./Negocios/datosNegocioRuta');
+const finanzas = require('./Negocios/finanzasRuta');
+const crearMembresia = require('./Administradores/crearMembresiaRuta');
+const verMembresias = require('./Administradores/verMembresiasRuta');
+const renovarMembresia = require('./Administradores/renovarMembresiaRuta');
 
 router.use("/negocios", registroNegocios);
 router.use("/api", login);
@@ -65,5 +69,9 @@ router.use("/api", verVentas);
 router.use("/api", datosUsuario);
 router.use("/api", detalleVenta);
 router.use("/api", datosNegocio);
+router.use("/api", finanzas);
+router.use("/api", crearMembresia);
+router.use("/api", verMembresias);
+router.use("/api", renovarMembresia);
 
 module.exports = router;
