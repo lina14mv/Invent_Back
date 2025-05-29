@@ -11,6 +11,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5002", // Origen local para desarrollo
   "http://localhost:5173",
+  "https://d2oip7dtxebx8q.cloudfront.net"
   // "http://localhost:3004",
   // "https://movetogether.netlify.app", 
   // "https://move-together-back.vercel.app",
