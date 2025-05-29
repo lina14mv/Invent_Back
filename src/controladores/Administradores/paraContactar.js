@@ -24,7 +24,7 @@ const registrarContacto = async (req, res) => {
 // Listar todos los contactos
 const listarContactos = async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM ParaContactar ORDER BY fecha DESC');
+    const result = await pool.query('SELECT * FROM ParaContactar WHERE contactado = false ORDER BY fecha DESC');
     res.status(200).json(result.rows);
   } catch (error) {
     console.error(error);
@@ -32,4 +32,18 @@ const listarContactos = async (req, res) => {
   }
 };
 
-module.exports = { registrarContacto, listarContactos };
+const marcarComoContactado = async (req, res) => {
+  const { id_contacto } = req.body;
+  try {
+    await pool.query(
+      'UPDATE ParaContactar SET contactado = true WHERE id_contacto = $1',
+      [id_contacto]
+    );
+    res.status(200).json({ message: 'Contacto marcado como contactado' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al actualizar el contacto' });
+  }
+};
+
+module.exports = { registrarContacto, listarContactos, marcarComoContactado };

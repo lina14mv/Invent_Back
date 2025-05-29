@@ -1,5 +1,5 @@
 const express = require('express');
-const { registrarContacto, listarContactos } = require('../../controladores/Administradores/paraContactar');
+const { registrarContacto, listarContactos, marcarComoContactado } = require('../../controladores/Administradores/paraContactar');
 
 const router = express.Router();
 
@@ -8,5 +8,7 @@ router.post('/paraContactar', registrarContacto);
 
 // Ruta para listar todos los contactos
 router.get('/listarContactos', listarContactos);
+
+router.post('/contactado', marcarComoContactado);
 
 module.exports = router;
