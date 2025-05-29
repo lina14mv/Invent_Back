@@ -7,8 +7,8 @@ const pool = new Pool({
     password: process.env.DATABASE_PASSWORD,
     port: 5432, // Puerto por defecto de PostgreSQL
     ssl: { rejectUnauthorized: false }, // Habilitar SSL
-    idleTimeoutMillis: 3000, // Tiempo de espera para liberar conexiones inactivas
-    connectionTimeoutMillis: 1000, // Tiempo de espera para establecer una conexión
+    idleTimeoutMillis: 30000, // Tiempo de espera para liberar conexiones inactivas
+    connectionTimeoutMillis: 10000, // Tiempo de espera para establecer una conexión
 });
 
 const testDbConnection = async () => {
