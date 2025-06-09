@@ -4,6 +4,8 @@ const express = require("express");
 const cors = require("cors");
 const rutas = require("./src/rutas/indexRutas");
 const { testDbConnection } = require("./configuracion/bd");
+const fs = require("fs");
+const https = require("https");
 
 const app = express();
 
@@ -13,8 +15,6 @@ const allowedOrigins = [
   "https://d2oip7dtxebx8q.cloudfront.net",
   "http://d2oip7dtxebx8q.cloudfront.net",
   // "http://localhost:3004",
-  // "https://movetogether.netlify.app", 
-  // "https://move-together-back.vercel.app",
 ];
 const corsOptions = {
   origin: function (origin, callback) {
@@ -45,6 +45,14 @@ testDbConnection(app);
 // Usar las rutas de la API
 app.use(rutas);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`);
-});
+https.createServer({
+  key: fs.readFileSync("server-key.pem"),
+  cert: fs.readFileSync("server-cert.pem")
+}, app).listen(process.env.PORT, () => {
+  console.log(`Servidor HTTPS corriendo en https://localhost:${process.env.PORT}`);
+})
+
+
+// app.listen(process.env.PORT, () => {
+//   console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`);
+// });
