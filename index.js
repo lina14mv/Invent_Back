@@ -12,6 +12,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5002", // Origen local para desarrollo
   "http://localhost:5173",
+  "https://localhost:5173",
   "https://d2oip7dtxebx8q.cloudfront.net",
   "http://d2oip7dtxebx8q.cloudfront.net",
   // "http://localhost:3004",
@@ -45,14 +46,14 @@ testDbConnection(app);
 // Usar las rutas de la API
 app.use(rutas);
 
-https.createServer({
-  key: fs.readFileSync("server-key.pem"),
-  cert: fs.readFileSync("server-cert.pem")
-}, app).listen(process.env.PORT, () => {
-  console.log(`Servidor HTTPS corriendo en https://localhost:${process.env.PORT}`);
-})
+// https.createServer({
+//   key: fs.readFileSync("localhost-key.pem"),
+//   cert: fs.readFileSync("localhost.pem")
+// }, app).listen(process.env.PORT, () => {
+//   console.log(`Servidor HTTPS corriendo en https://localhost:${process.env.PORT}`);
+// })
 
 
-// app.listen(process.env.PORT, () => {
-//   console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`);
-// });
+app.listen(process.env.PORT, () => {
+   console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`);
+ });
